@@ -10,7 +10,7 @@ import com.example.taskmanager.model.Task
 
 
 
-class TaskAdapter(val list : ArrayList<Task>): Adapter<TaskAdapter.TaskViewHolder>() {
+class TaskAdapter(private val list : ArrayList<Task>): Adapter<TaskAdapter.TaskViewHolder>() {
 
 
     fun addTask(task: Task){
@@ -18,7 +18,7 @@ class TaskAdapter(val list : ArrayList<Task>): Adapter<TaskAdapter.TaskViewHolde
         notifyItemChanged(0)
     }
 
-    inner class TaskViewHolder(val binding: ListItemBinding) :RecyclerView.ViewHolder(binding.root){
+    inner class TaskViewHolder(private val binding: ListItemBinding) :RecyclerView.ViewHolder(binding.root){
         fun bind(task: Task) {
             binding.tvTitle.text = task.title
             binding.tvDesc.text = task.desc
