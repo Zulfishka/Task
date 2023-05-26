@@ -25,10 +25,20 @@ class Pref (context:Context) {
     }
 
 
+    fun saveImage (image: String) {
+        pref.edit().putString(SAVE_IMAGE_KEY,image).apply()
+    }
+
+    fun getImage(): String? {
+        return pref.getString(SAVE_IMAGE_KEY,"")
+    }
+
+
     companion object {
         const val SHARED_NAME = "task_app"
         const val SEEN_KEY = "isSeen"
         const val SAVE_NAME_KEY = "name"
+        const val SAVE_IMAGE_KEY = "image"
     }
 
 }

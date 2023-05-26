@@ -9,16 +9,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.example.taskmanager.R
 import com.example.taskmanager.data.local.Pref
 import com.example.taskmanager.databinding.FragmentOnBoardBinding
 import com.example.taskmanager.databinding.FragmentProfileBinding
+import com.example.taskmanager.utils.loadImage
 
 class ProfileFragment : Fragment() {
 
     lateinit var binding: FragmentProfileBinding
     private lateinit var pref: Pref
     private val REQUEST_IMAGE = 1
+    private var selectedImage: Uri? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,12 +38,15 @@ class ProfileFragment : Fragment() {
         saveClick()
         binding.etProfile.setText(pref.getName())
         pressCircleImage()
+        binding.ivProfile.loadImage(pref.getImage().toString())
     }
 
     private fun saveClick() {
         with(binding) {
             bottomProfile.setOnClickListener {
                 pref.saveName(binding.etProfile.text.toString())
+                pref.saveImage(selectedImage.toString())
+
             }
         }
     }
@@ -58,8 +65,8 @@ class ProfileFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_IMAGE && resultCode == RESULT_OK && data != null){
-            val selectedImage: Uri? = data.data
-            binding.ivProfile.setImageURI(selectedImage)
+            selectedImage = data.data
+            binding.ivProfile.loadImage(selectedImage.toString())
         }
     }
 }

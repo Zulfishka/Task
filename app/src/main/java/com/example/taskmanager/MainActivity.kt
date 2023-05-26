@@ -41,8 +41,8 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_home,
                 R.id.navigation_dashboard,
                 R.id.navigation_notifications,
-                R.id.taskFragment,
-                R.id.navigation_music
+                R.id.navigation_profile,
+                R.id.taskFragment
             )
         )
 
@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
             R.id.navigation_home,
             R.id.navigation_dashboard,
             R.id.navigation_notifications,
-            R.id.navigation_music
+            R.id.navigation_profile
         )
 
         setupActionBarWithNavController(navController, appBarConfiguration)
