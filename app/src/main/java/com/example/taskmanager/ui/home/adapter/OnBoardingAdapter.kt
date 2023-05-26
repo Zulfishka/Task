@@ -1,5 +1,6 @@
 package com.example.taskmanager.ui.home.adapter
 
+import android.util.Log.i
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
@@ -9,8 +10,8 @@ import com.example.taskmanager.databinding.ItemOnboardingBinding
 import com.example.taskmanager.model.OnBoard
 import com.example.taskmanager.utils.loadImage
 
-class OnBoardingAdapter(private val onClick: () -> Unit)
-    : Adapter<OnBoardingAdapter.OnBoardingViewHolder>() {
+class OnBoardingAdapter(private val onClick: () -> Unit) :
+    Adapter<OnBoardingAdapter.OnBoardingViewHolder>() {
 
     private val data = arrayListOf<OnBoard>(
         OnBoard(
@@ -40,7 +41,7 @@ class OnBoardingAdapter(private val onClick: () -> Unit)
     }
 
     override fun onBindViewHolder(holder: OnBoardingViewHolder, position: Int) {
-        holder.bind(data[position])
+        holder.bind()
     }
 
     override fun getItemCount(): Int = data.size
@@ -48,12 +49,14 @@ class OnBoardingAdapter(private val onClick: () -> Unit)
     inner class OnBoardingViewHolder(private val binding: ItemOnboardingBinding) :
         ViewHolder(binding.root) {
 
-        fun bind(onBoard: OnBoard) {
-            binding.tvTitle.text = onBoard.title
-            binding.tvDesc.text = onBoard.description
-            binding.ivBoard.loadImage(OnBoard.image)
-            binding.skip.isVisible=adapterPosition!=2
-            binding.start.isVisible=adapterPosition==2
+        fun bind() {
+            binding.tvTitle.text = data[position].title
+            binding.tvDesc.text = data[position].description
+            binding.ivBoard.loadImage(data[position].image)
+
+
+            binding.skip.isVisible = adapterPosition != 2
+            binding.start.isVisible = adapterPosition == 2
             binding.skip.setOnClickListener {
                 onClick()
             }
