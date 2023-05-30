@@ -1,18 +1,16 @@
 package com.example.taskmanager.ui.profile
 
-import android.app.Activity.RESULT_OK
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
-import com.example.taskmanager.R
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import com.example.taskmanager.data.local.Pref
-import com.example.taskmanager.databinding.FragmentOnBoardBinding
 import com.example.taskmanager.databinding.FragmentProfileBinding
 import com.example.taskmanager.utils.loadImage
 
@@ -22,6 +20,16 @@ class ProfileFragment : Fragment() {
     private lateinit var pref: Pref
     private val REQUEST_IMAGE = 1
     private var selectedImage: Uri? = null
+
+    private val launcher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result: ActivityResult ->
+        if (result.resultCode == Activity.RESULT_OK && result.data != null) {
+            val photoUri = result.data?.data.toString()
+            pref.saveImage(photoUri)
+            binding.ivProfile.loadImage(photoUri)
+        }
+    }
 
 
     override fun onCreateView(
@@ -34,7 +42,7 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        pref= Pref(requireContext())
+        pref = Pref(requireContext())
         saveClick()
         binding.etProfile.setText(pref.getName())
         pressCircleImage()
@@ -52,21 +60,11 @@ class ProfileFragment : Fragment() {
     }
 
     private fun pressCircleImage() {
-        binding.ivProfile.setOnClickListener{
-            openGal()
-        }
-    }
-
-    private fun openGal() {
-        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        startActivityForResult(intent, REQUEST_IMAGE)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_IMAGE && resultCode == RESULT_OK && data != null){
-            selectedImage = data.data
-            binding.ivProfile.loadImage(selectedImage.toString())
+        binding.ivProfile.setOnClickListener {
+            val intent = Intent()
+            intent.type = "image/*"
+            intent.action = Intent.ACTION_GET_CONTENT
+            launcher.launch(intent)
         }
     }
 }
