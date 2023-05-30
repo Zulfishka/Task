@@ -26,7 +26,6 @@ class TaskFragment : Fragment() {
         return binding.root
     }
 
-    @SuppressLint("SuspiciousIndentation")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         with(binding) {
@@ -39,9 +38,5 @@ class TaskFragment : Fragment() {
             }
         }
     }
-    companion object {
-        const val RESULT_REQUEST = "request.task"
-        const val RESULT_KEY = "key.task"
     }
-}
 

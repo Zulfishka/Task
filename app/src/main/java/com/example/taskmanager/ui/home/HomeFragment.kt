@@ -51,7 +51,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun onLongClick(task: Task){
-        val alertDialog = AlertDialog.Builder (requireContext())
+            AlertDialog.Builder (requireContext())
             .setTitle("Удалить")
             .setMessage("Вы уверены?")
             .setPositiveButton("Удалить") {_, _ ->
