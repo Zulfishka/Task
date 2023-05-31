@@ -9,22 +9,15 @@ import com.example.taskmanager.databinding.ListItemBinding
 import com.example.taskmanager.model.Task
 
 
-
-class TaskAdapter(private val onLong: (Task) -> Unit): Adapter<TaskAdapter.TaskViewHolder>() {
+class TaskAdapter(private val onLong: (Task) -> Unit) : Adapter<TaskAdapter.TaskViewHolder>() {
 
     private val list = ArrayList<Task>()
 
-    fun addTask(task: Task){
-        list.add(0, task)
-        notifyItemChanged(0)
-    }
-
-    fun addTasks(tasks:List<Task>){
+    fun addTasks(tasks: List<Task>) {
         list.clear()
         list.addAll(tasks)
         notifyDataSetChanged()
     }
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         val binding = ListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -37,15 +30,17 @@ class TaskAdapter(private val onLong: (Task) -> Unit): Adapter<TaskAdapter.TaskV
 
     override fun getItemCount(): Int = list.size
 
-    inner class TaskViewHolder(private val binding: ListItemBinding) :RecyclerView.ViewHolder(binding.root){
+    inner class TaskViewHolder(private val binding: ListItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(task: Task) {
             binding.tvTitle.text = task.title
             binding.tvDesc.text = task.desc
 
-            itemView.setOnLongClickListener{
-                onLong (list[adapterPosition])
+            itemView.setOnLongClickListener {
+                onLong(list[adapterPosition])
                 false
-            }        }
+            }
+        }
     }
 
 }

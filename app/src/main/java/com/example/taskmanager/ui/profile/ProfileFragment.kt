@@ -18,8 +18,6 @@ class ProfileFragment : Fragment() {
 
     lateinit var binding: FragmentProfileBinding
     private lateinit var pref: Pref
-    private val REQUEST_IMAGE = 1
-    private var selectedImage: Uri? = null
 
     private val launcher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -44,8 +42,9 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         pref = Pref(requireContext())
         saveClick()
-        binding.etProfile.setText(pref.getName())
         pressCircleImage()
+
+        binding.etProfile.setText(pref.getName())
         binding.ivProfile.loadImage(pref.getImage().toString())
     }
 
@@ -53,8 +52,6 @@ class ProfileFragment : Fragment() {
         with(binding) {
             bottomProfile.setOnClickListener {
                 pref.saveName(binding.etProfile.text.toString())
-                pref.saveImage(selectedImage.toString())
-
             }
         }
     }

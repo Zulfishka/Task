@@ -15,24 +15,24 @@ class OnBoardFragment : Fragment() {
 
     private lateinit var binding: FragmentOnBoardBinding
     private lateinit var pref: Pref
-    private val adapter = OnBoardingAdapter(this:: onStartClick)
+    private val adapter = OnBoardingAdapter(this::onStartClick)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentOnBoardBinding.inflate(inflater,container,false)
+        binding = FragmentOnBoardBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        pref=Pref(requireContext())
+        pref = Pref(requireContext())
         binding.viewPager.adapter = adapter
         binding.indicator.setViewPager(binding.viewPager)
     }
 
-    private fun onStartClick () {
+    private fun onStartClick() {
         pref.userSeen()
         findNavController().navigateUp()
     }

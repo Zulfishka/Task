@@ -22,19 +22,18 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         pref = Pref(this)
-        replaceFragments()
+        initNavigation()
     }
 
-        @SuppressLint("SuspiciousIndentation")
-        private fun replaceFragments(){
+    private fun initNavigation() {
 
         val navView: BottomNavigationView = binding.navView
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
 
-            if (!pref.isUserSeen()) {
-                navController.navigate(R.id.onBoardFragment)
-            }
+        if (!pref.isUserSeen()) {
+            navController.navigate(R.id.onBoardFragment)
+        }
 
         val appBarConfiguration = AppBarConfiguration(
             setOf(

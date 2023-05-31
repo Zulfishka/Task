@@ -7,7 +7,6 @@ class Pref (context:Context) {
 
     private val pref = context.getSharedPreferences(SHARED_NAME, MODE_PRIVATE)
 
-
     fun isUserSeen(): Boolean{
         return pref.getBoolean(SEEN_KEY, false)
     }
@@ -24,7 +23,6 @@ class Pref (context:Context) {
         return pref.getString(SAVE_NAME_KEY,"")
     }
 
-
     fun saveImage (image: String) {
         pref.edit().putString(SAVE_IMAGE_KEY,image).apply()
     }
@@ -32,7 +30,6 @@ class Pref (context:Context) {
     fun getImage(): String? {
         return pref.getString(SAVE_IMAGE_KEY,"")
     }
-
 
     companion object {
         const val SHARED_NAME = "task_app"

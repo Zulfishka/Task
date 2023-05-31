@@ -12,19 +12,18 @@ import com.example.taskmanager.R
 import com.example.taskmanager.databinding.FragmentHomeBinding
 import com.example.taskmanager.model.Task
 import com.example.taskmanager.ui.home.adapter.TaskAdapter
-import com.example.taskmanager.ui.task.TaskFragment
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
 
-    private lateinit var adapterh: TaskAdapter
+    private lateinit var adapter: TaskAdapter
 
     private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        adapterh = TaskAdapter(this::onLongClick)
+        adapter = TaskAdapter(this::onLongClick)
     }
 
     override fun onCreateView(
@@ -38,28 +37,27 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initRecycler()
+        getData()
+        binding.rvTask.adapter = adapter
+
         binding.fab.setOnClickListener {
             findNavController().navigate(R.id.taskFragment)
         }
-            val tasks = App.db.dao().getAll()
-            adapterh.addTasks(tasks)
-        }
-
-        private fun initRecycler(){
-            binding.rvTask.adapter = adapterh
     }
 
-    private fun onLongClick(task: Task){
-            AlertDialog.Builder (requireContext())
-            .setTitle("Удалить")
+    private fun onLongClick(task: Task) {
+        AlertDialog.Builder(requireContext())
+            .setTitle(getString(R.string.delete))
             .setMessage("Вы уверены?")
-            .setPositiveButton("Удалить") {_, _ ->
+            .setPositiveButton("Удалить") { _, _ ->
                 App.db.dao().delete(task)
-                val list = App.db.dao().getAll()
-                adapterh.addTasks(list)
             }
             .setNegativeButton("Отмена", null)
             .show()
+    }
+
+    private fun getData() {
+        val list = App.db.dao().getAll()
+        adapter.addTasks(list)
     }
 }

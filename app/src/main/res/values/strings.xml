@@ -7,4 +7,5 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_music" />
     <string name="save">Save</string>
+    <string name="delete">Удалить</string>
 </resources>

@@ -41,7 +41,7 @@ class OnBoardingAdapter(private val onClick: () -> Unit) :
     }
 
     override fun onBindViewHolder(holder: OnBoardingViewHolder, position: Int) {
-        holder.bind()
+        holder.bind(data[position])
     }
 
     override fun getItemCount(): Int = data.size
@@ -49,14 +49,15 @@ class OnBoardingAdapter(private val onClick: () -> Unit) :
     inner class OnBoardingViewHolder(private val binding: ItemOnboardingBinding) :
         ViewHolder(binding.root) {
 
-        fun bind() {
-            binding.tvTitle.text = data[position].title
-            binding.tvDesc.text = data[position].description
-            binding.ivBoard.loadImage(data[position].image)
+        fun bind(onBoard: OnBoard) {
+            binding.tvTitle.text = onBoard.title
+            binding.tvDesc.text = onBoard.description
+            binding.ivBoard.loadImage(onBoard.image)
 
 
-            binding.skip.isVisible = adapterPosition != 2
-            binding.start.isVisible = adapterPosition == 2
+            binding.skip.isVisible = adapterPosition != data.lastIndex
+            binding.start.isVisible = adapterPosition == data.lastIndex
+
             binding.skip.setOnClickListener {
                 onClick()
             }
