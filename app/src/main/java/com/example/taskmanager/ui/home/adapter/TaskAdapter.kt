@@ -8,8 +8,10 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.taskmanager.databinding.ListItemBinding
 import com.example.taskmanager.model.Task
 
-
-class TaskAdapter(private val onLong: (Task) -> Unit) : Adapter<TaskAdapter.TaskViewHolder>() {
+class TaskAdapter(
+    private val onLong: (Task) -> Unit,
+    private val onClick: (Task) -> Unit
+) : Adapter<TaskAdapter.TaskViewHolder>() {
 
     private val list = ArrayList<Task>()
 
@@ -39,6 +41,10 @@ class TaskAdapter(private val onLong: (Task) -> Unit) : Adapter<TaskAdapter.Task
             itemView.setOnLongClickListener {
                 onLong(list[adapterPosition])
                 false
+            }
+
+            itemView.setOnClickListener {
+                onClick(task)
             }
         }
     }

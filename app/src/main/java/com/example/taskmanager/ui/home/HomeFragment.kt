@@ -23,7 +23,8 @@ class HomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        adapter = TaskAdapter(this::onLongClick)
+
+        adapter = TaskAdapter(this::onLongClick, this::onClick)
     }
 
     override fun onCreateView(
@@ -49,7 +50,7 @@ class HomeFragment : Fragment() {
         AlertDialog.Builder(requireContext())
             .setTitle(getString(R.string.delete))
             .setMessage("Вы уверены?")
-            .setPositiveButton("Удалить") { _, _ ->
+            .setPositiveButton(R.string.delete) { _, _ ->
                 App.db.dao().delete(task)
             }
             .setNegativeButton("Отмена", null)
@@ -59,5 +60,10 @@ class HomeFragment : Fragment() {
     private fun getData() {
         val list = App.db.dao().getAll()
         adapter.addTasks(list)
+    }
+
+    private fun onClick(task: Task) {
+
+        findNavController().navigate(HomeFragmentDirections.actionNavigationHomeToTaskFragment(task))
     }
 }

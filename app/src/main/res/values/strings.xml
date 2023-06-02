@@ -8,4 +8,5 @@
     <string name="title_music" />
     <string name="save">Save</string>
     <string name="delete">Удалить</string>
+    <string name="update">Update</string>
 </resources>
