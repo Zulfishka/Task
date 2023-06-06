@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.taskmanager.App
@@ -63,7 +64,10 @@ class HomeFragment : Fragment() {
     }
 
     private fun onClick(task: Task) {
+        findNavController().navigate(R.id.taskFragment, bundleOf(TASK_KEY to task))
+    }
 
-        findNavController().navigate(HomeFragmentDirections.actionNavigationHomeToTaskFragment(task))
+    companion object {
+        const val TASK_KEY = "task.key"
     }
 }
