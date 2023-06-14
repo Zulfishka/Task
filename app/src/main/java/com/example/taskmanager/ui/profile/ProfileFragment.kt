@@ -10,9 +10,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.navigation.fragment.findNavController
+import com.example.taskmanager.R
 import com.example.taskmanager.data.local.Pref
 import com.example.taskmanager.databinding.FragmentProfileBinding
 import com.example.taskmanager.utils.loadImage
+import com.google.firebase.auth.FirebaseAuth
 
 class ProfileFragment : Fragment() {
 
@@ -43,6 +46,7 @@ class ProfileFragment : Fragment() {
         pref = Pref(requireContext())
         saveClick()
         pressCircleImage()
+        logOut()
 
         binding.etProfile.setText(pref.getName())
         binding.ivProfile.loadImage(pref.getImage().toString())
@@ -64,4 +68,13 @@ class ProfileFragment : Fragment() {
             launcher.launch(intent)
         }
     }
+
+    private fun logOut() {
+        binding.ivLogout.setOnClickListener{
+            FirebaseAuth.getInstance().signOut()
+            findNavController().navigate(R.id.action_navigation_profile_to_authFragment)
+        }
+    }
 }
+
+
